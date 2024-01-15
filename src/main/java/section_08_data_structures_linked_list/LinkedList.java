@@ -1,8 +1,6 @@
 package section_08_data_structures_linked_list;
 
 
-import java.util.List;
-
 public class LinkedList<T> {
 
 
@@ -17,6 +15,39 @@ public class LinkedList<T> {
         head = tail = node;
 
         length++;
+    }
+
+    LinkedList() {
+        head = tail = null;
+        length = 0;
+    }
+
+    public static void main(String[] args) {
+        LinkedList<Integer> linkedList = new LinkedList<Integer>(10);
+
+        linkedList.append(5);
+        linkedList.append(16);
+
+        System.out.println(linkedList);
+
+        linkedList.prepend(1);
+
+        System.out.println(linkedList);
+
+        linkedList.insert(2, 99);
+        linkedList.insert(20, 88);
+
+        System.out.println(linkedList);
+
+        linkedList.remove(2);
+        linkedList.remove(2);
+
+        System.out.println(linkedList);
+
+        linkedList.reverse();
+
+        System.out.println(linkedList);
+
     }
 
     public void append(T value) {
@@ -77,10 +108,8 @@ public class LinkedList<T> {
             leader.next = nodeToInsert;
             nodeToInsert.next = holdingPointer;
 
+            length++;
         }
-
-
-        length++;
 
 
     }
@@ -91,9 +120,7 @@ public class LinkedList<T> {
         } else if (index <= 0 || length == 1) {
             head = head.next;
         } else if (index >= length - 1) {
-            ListNode<T> leadNode = traverseToIndex(
-                    length - 2
-            );
+            ListNode<T> leadNode = traverseToIndex(length - 2);
 
             leadNode.next = null;
         } else {
@@ -106,6 +133,34 @@ public class LinkedList<T> {
         if (length != 0) {
             length--;
         }
+    }
+
+    public void reverse() {
+
+        if (head == null) {
+            return;
+        } else if (length == 1) {
+            return;
+        } else {
+            ListNode<T> previous = null;
+            ListNode<T> current = head;
+            ListNode<T> next = null;
+
+            tail = current;
+
+            while (current != null) {
+                next = current.next;
+                current.next = previous;
+
+                previous = current;
+                current = next;
+
+            }
+
+            head = previous;
+        }
+
+
     }
 
     @Override
@@ -126,29 +181,5 @@ public class LinkedList<T> {
         result.append("Length: ").append(length);
 
         return result.toString();
-    }
-
-
-    public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<Integer>(10);
-
-        linkedList.append(5);
-        linkedList.append(16);
-
-        System.out.println(linkedList);
-
-        linkedList.prepend(1);
-
-        System.out.println(linkedList);
-
-        linkedList.insert(2, 99);
-        linkedList.insert(20, 88);
-
-        System.out.println(linkedList);
-
-        linkedList.remove(2);
-        linkedList.remove(2);
-
-        System.out.println(linkedList);
     }
 }
